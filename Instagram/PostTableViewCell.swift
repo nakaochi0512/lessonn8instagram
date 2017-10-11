@@ -34,6 +34,8 @@ class PostTableViewCell: UITableViewCell {
 
         // Configure the view for the selected state
     }
+    
+    
     func setPostData(postData: PostData) {
         self.postImageView.image = postData.image
         
@@ -57,20 +59,20 @@ class PostTableViewCell: UITableViewCell {
             self.likeButton.setImage(buttonImage, for: UIControlState.normal)
         }
     }
+    
+
     @IBAction func CommentButtom(_ sender: Any) {
         
         let name = FIRAuth.auth()?.currentUser?.displayName
-        
         let postcomment = FIRDatabase.database().reference().child(Const.commentPath)
         let postvalue = ["commentuser": commentField.text!,"name": name!]
         postcomment.childByAutoId().setValue(postvalue)
         commentField.text = ""
+        commentLabel.text = postvalue["commentuser"]
+        commentnameLabel.text = postvalue["name"]
        
-        let key = postcomment.child("commentuser").childByAutoId().key
-        
-        commentnameLabel.text = key
-        
-        
+    
+    
     }
 
 }
