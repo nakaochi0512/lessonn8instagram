@@ -19,6 +19,7 @@ class PostTableViewCell: UITableViewCell {
     @IBOutlet weak var commentField: UITextField!
     @IBOutlet weak var commentLabel: UILabel!
     @IBOutlet weak var commentnameLabel: UILabel!
+   
     
   
 
@@ -61,18 +62,27 @@ class PostTableViewCell: UITableViewCell {
     }
     
 
+    
     @IBAction func CommentButtom(_ sender: Any) {
-        
-        let name = FIRAuth.auth()?.currentUser?.displayName
         let postcomment = FIRDatabase.database().reference().child(Const.commentPath)
-        let postvalue = ["commentuser": commentField.text!,"name": name!]
-        postcomment.childByAutoId().setValue(postvalue)
-        commentField.text = ""
-        commentLabel.text = postvalue["commentuser"]
-        commentnameLabel.text = postvalue["name"]
-       
-    
-    
+        postcomment.observe(.childAdded, with: { snapshot in
+            print("DEBUG_PRINT: .childAddedイベントが発生しました。")
+            
+            // PostDataクラスを生成して受け取ったデータを設定する
+            
+            if let uid = FIRAuth.auth()?.currentUser?.uid {
+                let commentdata = CommentData(snapshot: snapshot, myId: uid)
+                postcomment.childByAutoId().setValue(CommentData.self)
+                print(commentdata.name!)
+                print(commentdata.comment!)
+                
+            }
+        })
     }
-
 }
+ 
+ 
+ 
+ 
+ 
+ 
