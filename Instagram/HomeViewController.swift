@@ -10,6 +10,8 @@ class HomeViewController: UIViewController, UITableViewDataSource, UITableViewDe
     
     var postArray: [PostData] = []
     
+    
+    
     // FIRDatabaseのobserveEventの登録状態を表す
     var observing = false
     

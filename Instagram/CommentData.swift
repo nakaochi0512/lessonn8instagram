@@ -22,7 +22,7 @@ class CommentData: NSObject {
         self.id = snapshot.key
         let valueDictionary = snapshot.value as! [String: AnyObject]
         self.name = valueDictionary["name"] as? String
-        self.comment = valueDictionary["commentuser"] as? String
+        self.comment = valueDictionary["commenttext"] as? String
         
     }
 }
