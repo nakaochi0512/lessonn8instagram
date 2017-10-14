@@ -19,10 +19,10 @@ class PostTableViewCell: UITableViewCell {
     @IBOutlet weak var commentField: UITextField!
     @IBOutlet weak var commentLabel: UILabel!
     @IBOutlet weak var commentnameLabel: UILabel!
+    @IBOutlet weak var commentButton: UIButton!
    
     
-  
-var commentArray: [CommentData] = []
+
     
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -50,7 +50,11 @@ var commentArray: [CommentData] = []
         
         let dateString:String = formatter.string(from: postData.date! as Date)
         self.dateLabel.text = dateString
-    
+        
+        
+        if postData.comment != nil {
+        self.commentLabel.text = "\(postData.comment!)"
+        }
         
         if postData.isLiked {
             let buttonImage = UIImage(named: "like_exist")
@@ -63,47 +67,6 @@ var commentArray: [CommentData] = []
     
 
     
-    @IBAction func CommentButtom(_ sender: Any) {
-        
-        let name = FIRAuth.auth()?.currentUser?.displayName
-        let postRef = FIRDatabase.database().reference().child(Const.commentPath)
-        
-        let postData = ["commenttext": commentField.text!,"name": name!]
-        postRef.childByAutoId().setValue(postData)
-        
-        
-        postRef.observe(.childAdded, with: { snapshot in
-            print("DEBUG_PRINT: .childAddedイベントが発生しました。")
-            // PostDataクラスを生成して受け取ったデータを設定する
-           
-            
-            
-            if let uid = FIRAuth.auth()?.currentUser?.uid {
-                
-                 let commentdata = CommentData(snapshot: snapshot, myId: uid)
-                self.commentArray.insert(commentdata, at: 0)
-                 
-                 // 保持している配列からidが同じものを探す
-                 var index: Int = 0
-                 for post in self.commentArray {
-                 if post.id == commentdata.id {
-                 index = self.commentArray.index(of: post)!
-                 break
-                 }
-                 }
-      
-                // 差し替えるため一度削除する
-                self.commentArray.remove(at: index)
-                
-                // 削除したところに更新済みのデータを追加する
-                self.commentArray.insert(commentdata, at: index)
-                print(self.commentArray)
-                
-
-            }
-        })
-    }
 }
 
-    
 

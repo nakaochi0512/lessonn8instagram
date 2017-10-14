@@ -109,6 +109,7 @@ class HomeViewController: UIViewController, UITableViewDataSource, UITableViewDe
         
         // セル内のボタンのアクションをソースコードで設定する
         cell.likeButton.addTarget(self, action:#selector(handleButton(sender:event:)), for:  UIControlEvents.touchUpInside)
+        cell.commentButton.addTarget(self, action:#selector(commenthundleButton(sender:event:)), for:  UIControlEvents.touchUpInside)
         
         return cell
     }
@@ -159,4 +160,18 @@ class HomeViewController: UIViewController, UITableViewDataSource, UITableViewDe
             
         }
     }
-}
+    func commenthundleButton(sender: UIButton, event:UIEvent) {
+        
+                  }
+        
+        
+        
+        
+        
+    }
+
+
+
+
+
+
