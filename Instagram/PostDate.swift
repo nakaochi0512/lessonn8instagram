@@ -34,7 +34,7 @@ class PostData: NSObject {
         
         self.caption = valueDictionary["caption"] as? String
         
-        self.comment = valueDictionary["commentUser"] as? String
+        self.comment = valueDictionary["comment"] as? String
         
         let time = valueDictionary["time"] as? String
         self.date = NSDate(timeIntervalSinceReferenceDate: TimeInterval(time!)!)

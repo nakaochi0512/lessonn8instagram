@@ -22,7 +22,6 @@ class PostViewController: UIViewController {
         // ImageViewから画像を取得する
         let imageData = UIImageJPEGRepresentation(imageView.image!, 0.5)
         let imageString = imageData!.base64EncodedString(options: .lineLength64Characters)
-        
         // postDataに必要な情報を取得しておく
         let time = NSDate.timeIntervalSinceReferenceDate
         let name = FIRAuth.auth()?.currentUser?.displayName

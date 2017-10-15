@@ -161,15 +161,34 @@ class HomeViewController: UIViewController, UITableViewDataSource, UITableViewDe
         }
     }
     func commenthundleButton(sender: UIButton, event:UIEvent) {
+        print("DEBUG_PRINT: Commentボタンがタップされました。")
+        // タップされたセルのインデックスを求める
+        let touch = event.allTouches?.first
+        let point = touch!.location(in: self.tableView)
+        let indexPath = tableView.indexPathForRow(at: point)
+        let commenclass = PostTableViewCell()
         
-                  }
+        // 配列からタップされたインデックスのデータを取り出す
+        let postData = postArray[indexPath!.row]
+        
+        postData.comment = commenclass.commentLabel.text
         
         
-        
+        let postRef = FIRDatabase.database().reference().child(Const.PostPath).child(postData.id!)
+        let comment = ["comment": postData.comment]
+        postRef.updateChildValues(comment)
         
         
     }
+    
+        
+        
+       
+}
 
+
+
+    
 
 
 
