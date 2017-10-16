@@ -164,8 +164,7 @@ class HomeViewController: UIViewController, UITableViewDataSource, UITableViewDe
     func commenthundleButton(sender: UIButton, event:UIEvent) {
         print("DEBUG_PRINT: Commentボタンがタップされました。")
         // タップされたセルのインデックスを求める
-        if let uid = FIRAuth.auth()?.currentUser?.uid {
-
+    
         let touch = event.allTouches?.first
         let point = touch!.location(in: self.tableView)
         let indexPath = tableView.indexPathForRow(at: point)
@@ -185,8 +184,7 @@ class HomeViewController: UIViewController, UITableViewDataSource, UITableViewDe
         
         SVProgressHUD.showSuccess(withStatus: "投稿しました")
         }
-        
-    }
+    
     
         
         
