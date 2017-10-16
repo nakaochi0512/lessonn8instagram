@@ -3,6 +3,7 @@ import UIKit
 import Firebase
 import FirebaseAuth
 import FirebaseDatabase
+import SVProgressHUD
 
 class HomeViewController: UIViewController, UITableViewDataSource, UITableViewDelegate {
     
@@ -163,21 +164,27 @@ class HomeViewController: UIViewController, UITableViewDataSource, UITableViewDe
     func commenthundleButton(sender: UIButton, event:UIEvent) {
         print("DEBUG_PRINT: Commentボタンがタップされました。")
         // タップされたセルのインデックスを求める
+        if let uid = FIRAuth.auth()?.currentUser?.uid {
+
         let touch = event.allTouches?.first
         let point = touch!.location(in: self.tableView)
         let indexPath = tableView.indexPathForRow(at: point)
-        let commenclass = PostTableViewCell()
+        let name = FIRAuth.auth()?.currentUser?.displayName
+            
+       let commenclass = tableView.cellForRow(at: indexPath!) as! PostTableViewCell
         
         // 配列からタップされたインデックスのデータを取り出す
         let postData = postArray[indexPath!.row]
         
-        postData.comment = commenclass.commentLabel.text
+        postData.comment = commenclass.commentField.text
         
         
         let postRef = FIRDatabase.database().reference().child(Const.PostPath).child(postData.id!)
-        let comment = ["comment": postData.comment]
+        let comment = ["comment": postData.comment,"commentnamefire": name!]
         postRef.updateChildValues(comment)
         
+        SVProgressHUD.showSuccess(withStatus: "投稿しました")
+        }
         
     }
     

@@ -52,8 +52,9 @@ class PostTableViewCell: UITableViewCell {
         self.dateLabel.text = dateString
         
         
-        if postData.comment != nil {
+        if (postData.comment != nil) && (postData.commentname != nil) {
         self.commentLabel.text = "\(postData.comment!)"
+        self.commentnameLabel.text = "\(postData.commentname!)"
         }
         
         if postData.isLiked {
