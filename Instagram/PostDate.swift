@@ -34,8 +34,7 @@ class PostData: NSObject {
         self.name = valueDictionary["name"] as? String
         
         self.commentname = valueDictionary["commentnamefire"] as? String
-        print(commentname)
-        
+   
         
         self.caption = valueDictionary["caption"] as? String
         
