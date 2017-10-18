@@ -162,6 +162,8 @@ class HomeViewController: UIViewController, UITableViewDataSource, UITableViewDe
             
         }
     }
+    
+    
     func commenthundleButton(sender: UIButton, event:UIEvent) {
         print("DEBUG_PRINT: Commentボタンがタップされました。")
         // タップされたセルのインデックスを求める
@@ -176,8 +178,9 @@ class HomeViewController: UIViewController, UITableViewDataSource, UITableViewDe
         let postData = postArray[indexPath!.row]
         
         
-        
+        if commenclass.commentField.text != "" {
         // Firebaseに保存するデータの準備
+            print("\(commenclass.commentField.text)")
         if let uid = FIRAuth.auth()?.currentUser?.uid {
             
                 postData.comment.append(uid)
@@ -194,9 +197,11 @@ class HomeViewController: UIViewController, UITableViewDataSource, UITableViewDe
         postRef.updateChildValues(comment)
     
         SVProgressHUD.showSuccess(withStatus: "投稿しました")
-        
-        }
-
+            commenclass.commentField.text = ""
+        }else{
+        SVProgressHUD.showSuccess(withStatus: "コメントを入力してください")
+    }
+    }
         
        
 }

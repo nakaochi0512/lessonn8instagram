@@ -39,7 +39,6 @@ class PostData: NSObject {
         }
 
        
-        
         self.caption = valueDictionary["caption"] as? String
         
         if let comment = valueDictionary["comment"] as? [String]{

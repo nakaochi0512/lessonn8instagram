@@ -53,16 +53,19 @@ class PostTableViewCell: UITableViewCell {
         
         
         if (postData.comment != nil) && (postData.commentname != nil) {
+            commentnameLabel.text = ""
+            commentLabel.text = ""
+            
             for commenttext in postData.comment{
-        self.commentLabel.text = "\(self.commentLabel.text!)" + "\(commenttext)\n"
-        }
+                self.commentLabel.text = "\(self.commentLabel.text!)" + "\(commenttext)\n"
+            }
             for nametext in postData.commentname{
                 self.commentnameLabel.text = "\(self.commentnameLabel.text!)" + "\(nametext)\n"
             }
-            print(commentnameLabel.text)
-            print(commentLabel.text)
         }
         
+        
+
         
         if postData.isLiked {
             let buttonImage = UIImage(named: "like_exist")
