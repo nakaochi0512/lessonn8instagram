@@ -142,6 +142,7 @@ class HomeViewController: UIViewController, UITableViewDataSource, UITableViewDe
             if postData.isLiked {
                 // すでにいいねをしていた場合はいいねを解除するためIDを取り除く
                 var index = -1
+                
                 for likeId in postData.likes {
                     if likeId == uid {
                         // 削除するためにインデックスを保持しておく
@@ -164,29 +165,38 @@ class HomeViewController: UIViewController, UITableViewDataSource, UITableViewDe
     func commenthundleButton(sender: UIButton, event:UIEvent) {
         print("DEBUG_PRINT: Commentボタンがタップされました。")
         // タップされたセルのインデックスを求める
-    
+        
         let touch = event.allTouches?.first
         let point = touch!.location(in: self.tableView)
         let indexPath = tableView.indexPathForRow(at: point)
         let name = FIRAuth.auth()?.currentUser?.displayName
-            
-       let commenclass = tableView.cellForRow(at: indexPath!) as! PostTableViewCell
+        let commenclass = tableView.cellForRow(at: indexPath!) as! PostTableViewCell
         
         // 配列からタップされたインデックスのデータを取り出す
         let postData = postArray[indexPath!.row]
         
-        postData.comment = commenclass.commentField.text
         
+        
+        // Firebaseに保存するデータの準備
+        if let uid = FIRAuth.auth()?.currentUser?.uid {
+            
+                postData.comment.append(uid)
+                postData.commentname.append(uid)
+                
+            }
+        var i = postData.comment.count
+       
+        postData.comment[i-1] = commenclass.commentField.text!
+        postData.commentname[i-1] = name!
         
         let postRef = FIRDatabase.database().reference().child(Const.PostPath).child(postData.id!)
-        let comment = ["comment": postData.comment,"commentnamefire": name!]
+        let comment = ["comment": postData.comment,"commentname": postData.commentname] as [String : Any]
         postRef.updateChildValues(comment)
-        
+    
         SVProgressHUD.showSuccess(withStatus: "投稿しました")
-        }
-    
-    
         
+        }
+
         
        
 }
